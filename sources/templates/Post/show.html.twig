@@ -1,0 +1,8 @@
+{% extends 'layout.html.twig' %}
+{% block body %}
+<article class="blog-post">
+    <h2 class="blog-post-title">{{ post.getName() }}</h2>
+    <p class="blog-post-meta">{{ post.getPublishedAt()|date('Y-m-d') }} by <a href="{{ path('edit_post', {postId: post.getId()}) }}">Edit</a></p>
+    <p>{{ post.getDescription() }}</p>
+</article>
+{% endblock %}

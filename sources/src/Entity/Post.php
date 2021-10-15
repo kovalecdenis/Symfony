@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
-use Container7Hr6wbe\getDoctrineMigrations_UpToDateCommandService;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Post
 {
     /**
-     * @var integer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -20,83 +18,57 @@ class Post
     private $id;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=75)
      */
-    private $name;
+    private $Name;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $description;
+    private $Description;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $published_at;
+    private $Published_at;
 
-    /**
-     * @return integer|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->Name;
     }
 
-    /**
-     * @param string $name
-     * @return $this
-     */
-    public function setName(string $name): self
+    public function setName(string $Name): self
     {
-        $this->name = $name;
+        $this->Name = $Name;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->Description;
     }
 
-    /**
-     * @param string $description
-     * @return $this
-     */
-    public function setDescription(string $description): self
+    public function setDescription(string $Description): self
     {
-        $this->description = $description;
+        $this->Description = $Description;
 
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
     public function getPublishedAt(): ?\DateTimeInterface
     {
-        return $this->published_at;
+        return $this->Published_at;
     }
 
-    /**
-     * @param \DateTimeInterface $published_at
-     * @return $this
-     */
-    public function setPublishedAt(\DateTimeInterface $published_at): self
+    public function setPublishedAt(\DateTimeInterface $Published_at): self
     {
-        $this->published_at = $published_at;
+        $this->Published_at = $Published_at;
 
         return $this;
     }

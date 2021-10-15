@@ -130,7 +130,6 @@
       <path value="$PROJECT_DIR$/sources/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/sources/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/sources/vendor/phpunit/php-code-coverage" />
-      <path value="$PROJECT_DIR$/sources/vendor/squizlabs/php_codesniffer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
