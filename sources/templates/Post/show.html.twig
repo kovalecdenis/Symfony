@@ -2,7 +2,12 @@
 {% block body %}
 <article class="blog-post">
     <h2 class="blog-post-title">{{ post.getName() }}</h2>
-    <p class="blog-post-meta">{{ post.getPublishedAt()|date('Y-m-d') }} by <a href="{{ path('edit_post', {postId: post.getId()}) }}">Edit</a></p>
+    <p class="blog-post-meta">{{ post.getPublishedAt()|date('Y-m-d') }}  <a href="{{ path('edit_post', {post: post.getId()}) }}">Edit</a></p>
     <p>{{ post.getDescription() }}</p>
+    <p>
+        Export:
+        <a href="{{ path('export_csv_post', {post: post.getId()}) }}">Csv</a>
+        <a href="{{ path('export_html_post', {post: post.getId()}) }}">Html</a>
+    </p>
 </article>
 {% endblock %}

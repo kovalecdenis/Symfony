@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Form\PostForm;
 use App\Entity\Post;
+use App\Service\ExportPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,12 +44,12 @@ class PostController extends AbstractController {
     }
 
     /**
-     * @Route("/post/edit/{postId}", name="edit_post")
+     * @Route("/post/edit/{post}", name="edit_post")
      */
-    public function EditPost(Request $request, $postId)
+    public function EditPost(Request $request, Post $post)
     {
         $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository(Post::class)->find($postId);
+        //$post = $em->getRepository(Post::class)->find($postId);
         /*
         $post = $em->getRepository(Post::class)->find($request->get('id')); http://localhost:8000/post/edit?id=1
         */ //example
@@ -81,15 +82,39 @@ class PostController extends AbstractController {
     }
 
     /**
-     * @Route("/post/show/{postId}", name="show_post")
+     * @Route("/post/show/{post}", name="show_post")
      */
-    public function ShowPost(Request $request, $postId)
+    public function ShowPost(Request $request, Post $post)
     {
-        $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository(Post::class)->find($postId);
+            return $this->render("post/show.html.twig", [
+                'post' => $post,
+            ]);
+    }
 
-        return $this->render("post/show.html.twig", [
-            'post' => $post,
+    /**
+     * @Route("/post/csv/{post}", name="export_csv_post")
+     * @return Response
+     */
+    public function exportCsv(ExportPost $exportPost, Post $post)
+    {
+        $exportPost->Csv($post);
+
+        return $this->redirectToRoute('show_post', [
+            'post' => $post->getId(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/post/html/{post}", name="export_html_post")
+     * @return Response
+     */
+    public function exporHtml(ExportPost $exportPost, Post $post)
+    {
+      $exportPost->HTML($post);
+
+        return $this->redirectToRoute('show_post', [
+            'post' => $post->getId(),
         ]);
     }
 }
