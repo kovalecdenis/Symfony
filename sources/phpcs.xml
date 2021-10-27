@@ -43,6 +43,8 @@
     <exclude-pattern>*/.hg/*</exclude-pattern>
     <exclude-pattern>*/.bzr/*</exclude-pattern>
     <exclude-pattern>/drived-admin/src/Drived/AppBundle/Entity/*</exclude-pattern>
+    <exclude-pattern>C:/Users/User/PhpstormProjects/Symfony/sources/src/Entity/*</exclude-pattern>
+    <exclude-pattern>C:/Users/User/PhpstormProjects/Symfony/sources/src/Repository/*</exclude-pattern>
     <!-- ====================================================================== -->
     <!-- 2. Files -->
     <!-- ====================================================================== -->

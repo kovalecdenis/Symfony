@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <PhpCSConfiguration beautifier_path="$PROJECT_DIR$/sources/vendor/bin/phpcbf" tool_path="$PROJECT_DIR$/sources/vendor/bin/phpcs" />
+    </phpcs_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/sources/vendor/phpunit/php-file-iterator" />
@@ -130,6 +135,7 @@
       <path value="$PROJECT_DIR$/sources/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/sources/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/sources/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/sources/vendor/squizlabs/php_codesniffer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

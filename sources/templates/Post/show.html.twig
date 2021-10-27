@@ -10,16 +10,11 @@
         <a href="{{ path('export_html_post', {post: post.getId()}) }}">Html</a>
     </p>
     {% if file == 0 %}
-         Пусто
-    {% else %}
 
-        {% set replace_value_var_dot = '.' %}
-        {% set replace_value_var_1 = '%' %}
-        {% set replace_value_var_2 = '~' %}
-        {% set replace_with_value_var = '\\' %}
-
-       <a href="{{ file|replace({ (replace_value_var_2): replace_with_value_var, (replace_value_var_1): replace_value_var_dot }) }}">Open downloaded file</a>
-
-    {% endif %}
+        {% else %}
+                {% set replace_value_var_dot = '.' %}
+                {% set replace_value_var = '%' %}
+                Файл {{ file|replace({ (replace_value_var): replace_value_var_dot }) }}  успешно сохранен
+    {%  endif %}
 </article>
 {% endblock %}

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Form\PostForm;
 use App\Entity\Post;
 use App\Service\ExportPost;
@@ -11,10 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class PostController extends AbstractController {
-
+class PostController extends AbstractController
+{
     /**
+     * Создание и сохранение поста
      * @Route("/post/create", name="create_post")
+     * @param Request $request
+     * @return Response
      */
     public function CreatePost(Request $request)
     {
@@ -25,26 +27,30 @@ class PostController extends AbstractController {
 
         $PostForm = $this->createForm(PostForm::class, $post);
 
-
         $PostForm->handleRequest($request);
-        if($PostForm->isSubmitted() && $PostForm->isValid())
-        {
+        if ($PostForm->isSubmitted() && $PostForm->isValid()) {
+            $file = 0;
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
 
-            return $this->redirectToRoute('show_post' , [
-                'postId' => $post->getId(),
+            return $this->redirectToRoute('show_post', [
+                'post' => $post->getId(),
+                'file' => $file,
             ]);
         }
 
-        return $this->render("post/create.html.twig", [
+        return $this->render('post/create.html.twig', [
             'PostForm' => $PostForm->createView(),
         ]);
     }
 
     /**
+     * Редактирование поста
      * @Route("/post/edit/{post}", name="edit_post")
+     * @param Request $request
+     * @param Post    $post
+     * @return Response
      */
     public function EditPost(Request $request, Post $post)
     {
@@ -66,8 +72,7 @@ class PostController extends AbstractController {
         $id = $request->get('id');
       */ //example
         $PostForm->handleRequest($request);
-        if($PostForm->isSubmitted() && $PostForm->isValid())
-        {
+        if ($PostForm->isSubmitted() && $PostForm->isValid()) {
             $em->persist($post);
             $em->flush();
 
@@ -77,7 +82,7 @@ class PostController extends AbstractController {
             ]);
         }
 
-        return $this->render("post/edit.html.twig", [
+        return $this->render('post/edit.html.twig', [
             'PostForm' => $PostForm->createView(),
            // 'postId' => $post->getId(),
             'post' => $post,
@@ -86,10 +91,14 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/post/show/{post}/{file}", name="show_post")
+     * @param  Request $request
+     * @param  Post    $post
+     * @param  string  $file
+     * @return Response
      */
-    public function ShowPost(Post $post, Request $request, $file)
+    public function ShowPost(Request $request, Post $post, $file)
     {
-            return $this->render("post/show.html.twig", [
+            return $this->render('post/show.html.twig', [
                 'post' => $post,
                 'file' => $file,
             ]);
@@ -97,14 +106,16 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/post/csv/{post}", name="export_csv_post")
+     * @param  ExportPost $exportPost
+     * @param  Post       $post
      * @return Response
      */
     public function exportCsv(ExportPost $exportPost, Post $post)
     {
-
         $file = $exportPost->Csv($post);
-       // $file = $exportPost->show_path . $file;
-        $file = str_replace('\\', '~', $file);
+
+        // $file = $exportPost->show_path . $file;
+        //$file = str_replace('\\', '~', $file);
         $file = str_replace('.', '%', $file);
 
         return $this->redirectToRoute('show_post', [
@@ -115,13 +126,13 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/post/html/{post}", name="export_html_post")
+     * @param  ExportPost $exportPost
+     * @param  Post       $post
      * @return Response
      */
     public function exporHtml(ExportPost $exportPost, Post $post)
     {
-      $file = $exportPost->HTML($post);
-
-        $file = str_replace('\\', '~', $file);
+        $file = $exportPost->Html($post);
         $file = str_replace('.', '%', $file);
 
         return $this->redirectToRoute('show_post', [

@@ -11,17 +11,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PostForm extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       $builder->add('Name',TextType::class);
-       $builder->add('Description',TextareaType::class);
-       $builder->add('Published_at',DateType::class, [
+        $builder->add('Name', TextType::class);
+        $builder->add('Description', TextareaType::class);
+        $builder->add('Published_at', DateType::class, [
            'widget' => 'single_text',
-       ]);
-       $builder->add('Submit',SubmitType::class, [
+        ]);
+        $builder->add('Submit', SubmitType::class, [
            'attr' => [
-               'style' => 'margin-top: 15px'
-           ]
-       ]);
+               'style' => 'margin-top: 15px',
+           ],
+        ]);
     }
 }
