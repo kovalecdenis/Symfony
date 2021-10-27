@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExportPost
 {
-private $path = 'C:\Users\User\PhpstormProjects\Symfony\sources\public\Downloaded_files\\';
+
+    //private $path = 'C:\Users\User\PhpstormProjects\Symfony\sources\public\Downloaded_files\\';
+    public $path = 'C:\Users\User\PhpstormProjects\Symfony\sources\public\Downloaded_files\\';
 
     /**
      * @param $type
@@ -48,7 +50,6 @@ private $path = 'C:\Users\User\PhpstormProjects\Symfony\sources\public\Downloade
 
         return $filename;
     }
-
 }
 
 

@@ -48,6 +48,8 @@ class PostController extends AbstractController {
      */
     public function EditPost(Request $request, Post $post)
     {
+        $file = 0;
+        //==========
         $em = $this->getDoctrine()->getManager();
         //$post = $em->getRepository(Post::class)->find($postId);
         /*
@@ -70,7 +72,8 @@ class PostController extends AbstractController {
             $em->flush();
 
             return $this->redirectToRoute('show_post', [
-                'postId' => $post->getId(),
+                'post' => $post->getId(),
+                'file' => $file,
             ]);
         }
 
@@ -82,12 +85,13 @@ class PostController extends AbstractController {
     }
 
     /**
-     * @Route("/post/show/{post}", name="show_post")
+     * @Route("/post/show/{post}/{file}", name="show_post")
      */
-    public function ShowPost(Request $request, Post $post)
+    public function ShowPost(Post $post, Request $request, $file)
     {
             return $this->render("post/show.html.twig", [
                 'post' => $post,
+                'file' => $file,
             ]);
     }
 
@@ -97,13 +101,17 @@ class PostController extends AbstractController {
      */
     public function exportCsv(ExportPost $exportPost, Post $post)
     {
-        $exportPost->Csv($post);
+
+        $file = $exportPost->Csv($post);
+       // $file = $exportPost->show_path . $file;
+        $file = str_replace('\\', '~', $file);
+        $file = str_replace('.', '%', $file);
 
         return $this->redirectToRoute('show_post', [
             'post' => $post->getId(),
+            'file' => $file,
         ]);
     }
-
 
     /**
      * @Route("/post/html/{post}", name="export_html_post")
@@ -111,10 +119,14 @@ class PostController extends AbstractController {
      */
     public function exporHtml(ExportPost $exportPost, Post $post)
     {
-      $exportPost->HTML($post);
+      $file = $exportPost->HTML($post);
+
+        $file = str_replace('\\', '~', $file);
+        $file = str_replace('.', '%', $file);
 
         return $this->redirectToRoute('show_post', [
             'post' => $post->getId(),
+            'file' => $file,
         ]);
     }
 }

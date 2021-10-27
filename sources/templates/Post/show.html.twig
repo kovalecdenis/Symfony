@@ -9,5 +9,17 @@
         <a href="{{ path('export_csv_post', {post: post.getId()}) }}">Csv</a>
         <a href="{{ path('export_html_post', {post: post.getId()}) }}">Html</a>
     </p>
+    {% if file == 0 %}
+         Пусто
+    {% else %}
+
+        {% set replace_value_var_dot = '.' %}
+        {% set replace_value_var_1 = '%' %}
+        {% set replace_value_var_2 = '~' %}
+        {% set replace_with_value_var = '\\' %}
+
+       <a href="{{ file|replace({ (replace_value_var_2): replace_with_value_var, (replace_value_var_1): replace_value_var_dot }) }}">Open downloaded file</a>
+
+    {% endif %}
 </article>
 {% endblock %}
