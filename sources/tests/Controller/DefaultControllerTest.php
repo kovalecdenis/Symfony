@@ -4,10 +4,19 @@ namespace App\Tests\Controller;
 
 
 use App\Entity\Post;
+use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
+    public function getLastId()
+    {
+        $postRepository = static::getContainer()->get(PostRepository::class);
+        $post = $postRepository->findOneBy([], ['id' => 'desc']);
+
+        return $post->getId();
+    }
+
     public function testDefaultController(): void
     {
         $client = static::createClient();
@@ -42,12 +51,10 @@ class DefaultControllerTest extends WebTestCase
         $this->assertTrue($post->getDescription() == $desc);
     }
 
-    /**
-     * @TODO: получить последний id
-     */
     public function testPostController(): void
     {
         $client = static::createClient();
+        $lastid = $this->getLastId();
 
         $crawler = $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
@@ -62,14 +69,23 @@ class DefaultControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Submit')->form();
 
-        //$form = $button->form();
-         //$name = $this->getName();
-
         $form['post_form[Name]'] = 'Test post-' . rand(0, 100);
         $form['post_form[Description]'] = 'Test description';
         $client->submit($form);
 
-        // $this->assertResponseRedirects(...) // postid
+        $thisid = $this->getLastId();
+        $this->assertTrue($thisid > $lastid);
+
+        $this->assertResponseRedirects('/post/show/' . $thisid . '/0');
+
+       // $link = $crawler->selectLink('Edit');
+       // $this->assertCount(0, $link);
+//        $crawler = $client->request('GET', '/post/edit/' . $lastid);
+//        $this->assertResponseIsSuccessful();
+//        $this->assertSelectorTextContains('label', 'Name');
+//        $this->assertSelectorTextContains('label', 'Description');
+//        $this->assertSelectorTextContains('label', 'Published at');
+
 
     }
 }
