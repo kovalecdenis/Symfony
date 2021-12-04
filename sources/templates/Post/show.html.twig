@@ -3,7 +3,10 @@
     <h2>Show</h2>
 <article class="blog-post">
     <h2 class="blog-post-title">{{ post.getName() }}</h2>
-    <p class="blog-post-meta">{{ post.getPublishedAt()|date('Y-m-d') }}  <a href="{{ path('edit_post', {post: post.getId()}) }}">Edit</a></p>
+    <p class="blog-post-meta">{{ post.getPublishedAt()|date('Y-m-d') }}
+        <a href="{{ path('edit_post', {post: post.getId()}) }}">Edit</a> |
+        <a href="{{ path('delete_post', {post: post.getId()}) }}">Delete Post</a>
+    </p>
     <p>{{ post.getDescription() }}</p>
     <p>
         Export:

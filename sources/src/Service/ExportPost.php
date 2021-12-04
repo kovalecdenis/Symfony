@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ExportPost
 {
     /**
-     * @todo write in services.yaml
      * @var string
+     * @todo write in services.yaml
      */
     private $path = 'C:\Users\User\PhpstormProjects\Symfony\sources\public\Downloaded_files\\';
 

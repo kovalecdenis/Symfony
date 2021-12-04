@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Form\PostForm;
 use App\Entity\Post;
 use App\Service\ExportPost;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,6 +94,39 @@ class PostController extends AbstractController
     }
 
     /**
+     * @Route("/post/delete/{post}", name="delete_post")
+     * @param  MailerInterface        $mailer
+     * @param  Request                $request
+     * @param  Post                   $post
+     * @param  EntityManagerInterface $em
+     * @return Response
+     */
+    public function DeletePost(MailerInterface $mailer, Request $request, Post $post, EntityManagerInterface $em)
+    {
+        $email = new Email();
+
+        $email->from('kovalecdenis2005@gmail.com');
+        $email->to('kovalecdenis2005@gmail.com');
+
+        $email->subject('Hello from Symfony');
+        $email->text('Привет, пост №' . $post->getId() . ' был удален!');
+
+        $email->html(
+            $this->renderView('email/delete.html.twig', [
+                'post' => $post,
+            ])
+        );
+
+        $mailer->send($email);
+
+        $em->remove($post);
+        $em->flush();
+
+        return $this->redirectToRoute('homepage');
+
+    }
+
+    /**
      * @Route("/post/show/{post}/{file}", name="show_post")
      * @param  Request $request
      * @param  Post    $post
@@ -130,7 +167,7 @@ class PostController extends AbstractController
      * @param  Post       $post
      * @return Response
      */
-    public function exporHtml(ExportPost $exportPost, Post $post)
+    public function exportHtml(ExportPost $exportPost, Post $post)
     {
         $file = $exportPost->Html($post);
         $file = str_replace('.', '%', $file);

@@ -132,6 +132,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/sources/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/sources/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/vendor/symfony/google-mailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

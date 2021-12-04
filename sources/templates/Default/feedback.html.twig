@@ -1,4 +1,29 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
+
     <h1>Feedback</h1>
+
+    {{ form_start(form) }}
+<div class="col-5">
+    <div>
+        {{ form_label(form.Name) }}
+        {{ form_widget(form.Name) }}
+        {{ form_errors(form.Name) }}
+    </div>
+    <div>
+        {{ form_label(form.Description) }}
+        {{ form_widget(form.Description) }}
+        {{ form_errors(form.Description) }}
+    </div>
+    <div>
+        {{ form_label(form.Contact) }}
+        {{ form_widget(form.Contact) }}
+        {{ form_errors(form.Contact) }}
+    </div>
+    <div style="margin-top: 10px">
+        <button type="submit" class="btn btn-outline-info">Send</button>
+    </div>
+</div>
+    {{ form_end(form) }}
+
 {% endblock %}
