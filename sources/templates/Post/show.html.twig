@@ -1,24 +1,18 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
-    <h2>Show</h2>
+    {{ parent() }}
 <article class="blog-post">
     <h2 class="blog-post-title">{{ post.getName() }}</h2>
     <p class="blog-post-meta">{{ post.getPublishedAt()|date('Y-m-d') }}
-        <a href="{{ path('edit_post', {post: post.getId()}) }}">Edit</a> |
-        <a href="{{ path('delete_post', {post: post.getId()}) }}">Delete Post</a>
+        <a href="{{ path('edit_post', {post: post.getId()}) }}">{{ 'Edit'|trans({}, 'post') }}</a> |
+        <a href="{{ path('delete_post', {post: post.getId()}) }}" onclick="return confirm('{{ 'Are you sure?'|trans({}, 'post') }}')">{{ 'Delete Post'|trans({}, 'post') }}</a>
     </p>
     <p>{{ post.getDescription() }}</p>
     <p>
-        Export:
+        {{ 'Export'|trans({}, 'post') }}:
         <a href="{{ path('export_csv_post', {post: post.getId()}) }}">Csv</a>
         <a href="{{ path('export_html_post', {post: post.getId()}) }}">Html</a>
-    </p>
-    {% if file == 0 %}
 
-        {% else %}
-                {% set replace_value_var_dot = '.' %}
-                {% set replace_value_var = '%' %}
-                Файл {{ file|replace({ (replace_value_var): replace_value_var_dot }) }}  успешно сохранен
-    {%  endif %}
+    </p>
 </article>
 {% endblock %}

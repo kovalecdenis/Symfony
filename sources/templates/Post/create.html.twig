@@ -1,9 +1,8 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
 
-<strong>Create Post</strong>
+<strong>{{ 'Create Post'|trans({}, 'post_create') }}</strong>
     <div class="col-4">
         {{ form(PostForm) }}
     </div>
-
 {% endblock body %}

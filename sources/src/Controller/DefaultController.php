@@ -14,6 +14,15 @@ class DefaultController extends AbstractController
 {
 
     /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function defaultLocale(Request $request)
+    {
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
      * @Route("/", name="homepage")
      * @return Response
      */
@@ -60,12 +69,15 @@ class DefaultController extends AbstractController
 
             $email->subject('Feedback message');
             $email->text(
-                'Name : ' . $name . "\n" .
-                      'Contact : ' . $contact . "\n" .
-                      'Message : ' . "\n" . $message
+                $this->renderView('Email/feedback_message_txt.html.twig', [
+                    'name' => $name,
+                    'contact' => $contact,
+                    'message' => $message,
+                ])
             );
+
             $email->html(
-                $this->renderView('email/feedback_message.html.twig', [
+                $this->renderView('Email/feedback_message.html.twig', [
                     'name' => $name,
                     'contact' => $contact,
                     'message' => $message,

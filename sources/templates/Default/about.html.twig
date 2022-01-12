@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
-<h1>About</h1>
-    {{ path('delete_post') }}
+<h1>{{ 'About'|trans({}, 'about') }}</h1>
+
+    {{ app.request.headers.get('referer') }}
+
 {% endblock %}

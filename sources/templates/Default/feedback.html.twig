@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
 
-    <h1>Feedback</h1>
+    <h1>{{ 'Feedback'|trans({}, 'feedback') }}</h1>
 
     {{ form_start(form) }}
 <div class="col-5">
@@ -20,8 +20,8 @@
         {{ form_widget(form.Contact) }}
         {{ form_errors(form.Contact) }}
     </div>
-    <div style="margin-top: 10px">
-        <button type="submit" class="btn btn-outline-info">Send</button>
+    <div style="margin-top: 10px;margin-bottom: 10px">
+        <button type="submit" class="btn btn-outline-info">{{ 'Send'|trans({}, 'feedback') }}</button>
     </div>
 </div>
     {{ form_end(form) }}

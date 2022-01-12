@@ -1,9 +1,7 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
-<h1>Edit</h1>
-<strong>Edit Post {{ post.getName() }}</strong>
+<strong>{{ 'Edit Post'|trans({}, 'post') }}: "{{ post.getName() }}"</strong>
     <div class="col-4">
         {{ form(PostForm) }}
     </div>
-
 {% endblock body %}

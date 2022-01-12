@@ -13,34 +13,34 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostController extends AbstractController
 {
     /**
      * Создание и сохранение поста
      * @Route("/post/create", name="create_post")
-     * @param Request $request
+     * @param Request             $request
+     * @param TranslatorInterface $translator
      * @return Response
      */
-    public function CreatePost(Request $request)
+    public function CreatePost(Request $request, TranslatorInterface $translator)
     {
         $post = new Post();
-        $post->setName('New Post');
-        $post->setDescription('Something');
+        $post->setName($translator->trans('New Post', [], 'post'));
+        $post->setDescription($translator->trans('Something', [], 'post'));
         $post->setPublishedAt(new \DateTime());
 
         $PostForm = $this->createForm(PostForm::class, $post);
 
         $PostForm->handleRequest($request);
         if ($PostForm->isSubmitted() && $PostForm->isValid()) {
-            $file = 0;
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
 
             return $this->redirectToRoute('show_post', [
                 'post' => $post->getId(),
-                'file' => $file,
             ]);
         }
 
@@ -58,7 +58,6 @@ class PostController extends AbstractController
      */
     public function EditPost(Request $request, Post $post)
     {
-        $file = 0;
         //==========
         $em = $this->getDoctrine()->getManager();
         //$post = $em->getRepository(Post::class)->find($postId);
@@ -82,7 +81,6 @@ class PostController extends AbstractController
 
             return $this->redirectToRoute('show_post', [
                 'post' => $post->getId(),
-                'file' => $file,
             ]);
         }
 
@@ -100,6 +98,7 @@ class PostController extends AbstractController
      * @param  Post                   $post
      * @param  EntityManagerInterface $em
      * @return Response
+     * @throws
      */
     public function DeletePost(MailerInterface $mailer, Request $request, Post $post, EntityManagerInterface $em)
     {
@@ -112,7 +111,7 @@ class PostController extends AbstractController
         $email->text('Привет, пост №' . $post->getId() . ' был удален!');
 
         $email->html(
-            $this->renderView('email/delete.html.twig', [
+            $this->renderView('Email/delete.html.twig', [
                 'post' => $post,
             ])
         );
@@ -127,17 +126,15 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/post/show/{post}/{file}", name="show_post")
+     * @Route("/post/show/{post}", name="show_post")
      * @param  Request $request
      * @param  Post    $post
-     * @param  string  $file
      * @return Response
      */
-    public function ShowPost(Request $request, Post $post, $file)
+    public function ShowPost(Request $request, Post $post)
     {
             return $this->render('post/show.html.twig', [
                 'post' => $post,
-                'file' => $file,
             ]);
     }
 
@@ -153,11 +150,10 @@ class PostController extends AbstractController
 
         // $file = $exportPost->show_path . $file;
         //$file = str_replace('\\', '~', $file);
-        $file = str_replace('.', '%', $file);
+       // $file = str_replace('.', '%', $file);
 
         return $this->redirectToRoute('show_post', [
             'post' => $post->getId(),
-            'file' => $file,
         ]);
     }
 
@@ -170,11 +166,10 @@ class PostController extends AbstractController
     public function exportHtml(ExportPost $exportPost, Post $post)
     {
         $file = $exportPost->Html($post);
-        $file = str_replace('.', '%', $file);
+       // $file = str_replace('.', '%', $file);
 
         return $this->redirectToRoute('show_post', [
             'post' => $post->getId(),
-            'file' => $file,
         ]);
     }
 }

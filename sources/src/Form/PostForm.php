@@ -18,15 +18,21 @@ class PostForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('Name', TextType::class);
-        $builder->add('Description', TextareaType::class);
+        $builder->add('Name', TextType::class, [
+            'translation_domain' => 'post',
+        ]);
+        $builder->add('Description', TextareaType::class, [
+            'translation_domain' => 'post',
+        ]);
         $builder->add('Published_at', DateType::class, [
            'widget' => 'single_text',
+            'translation_domain' => 'post',
         ]);
         $builder->add('Submit', SubmitType::class, [
            'attr' => [
                'style' => 'margin-top: 15px',
            ],
+            'translation_domain' => 'post',
         ]);
     }
 }

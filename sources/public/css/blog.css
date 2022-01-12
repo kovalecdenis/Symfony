@@ -101,3 +101,36 @@ h1, h2, h3, h4, h5, h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+/*
+ * en|ru button
+ */
+.lang-btn {
+  width: 50px;
+  border-collapse: collapse;
+  margin-right: 10px;
+}
+TD, TH {
+  padding: 3px;
+  border: 1px solid #727272;
+  color: black;
+}
+TH {
+  background: #b0e0e6;
+}
+TD:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #6c757d;
+  border-color :#6c757d;
+}
+
+.lang-btn-href {
+  text-decoration: none;
+  color: black;
+}
+.lang-btn-href:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
